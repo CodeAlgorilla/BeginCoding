@@ -4,3 +4,6 @@ this is just a test!
 test the status of git\
 now is on the new branch
 test ssh 
+
+
+test the function of merge
