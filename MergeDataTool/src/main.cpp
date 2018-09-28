@@ -12,7 +12,7 @@ int main()
   {
     std::cout << array[i] << std::endl;
   }
-  std::cout << "in the end" << std::endl;
+  std::cout << "in the end,ooooo" << std::endl;
   return 0;
 }
 
