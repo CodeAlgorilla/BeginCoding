@@ -7,6 +7,7 @@
 #include <algorithm>
 #include <dirent.h>
 #include <boost/filesystem.hpp>
+#include <boost/regex.hpp>
 #include <iostream>
 
 CsvMerger::CsvMerger(std::string file_name, std::string dir_path)
@@ -20,8 +21,24 @@ CsvMerger::~CsvMerger ()
 
 }
 
-void CsvMerger::findCsvFiles (std::regex reg)
+void CsvMerger::findCsvFiles ()
 {
+  getFileList ();
+  boost::regex reg(reg_pattern);
+  for (int i = 0; i < list_of_files.size (); i++)
+  {
+      std::cout << "right" << std::endl;
+    if(boost::regex_search (list_of_files[i],reg))
+    {
+        std::cout << "right" << std::endl;
+      list_of_csv_files.push_back (list_of_files[i]);
+    }
+  }
+  for(int i=0; i < list_of_csv_files.size (); i++)
+  {
+    std::cout << list_of_csv_files[i] << "\t"<< i << std::endl;
+  }
+
 
 }
 
@@ -55,4 +72,9 @@ void CsvMerger::getFileList ()
   {
     std::cout << list_of_files[i] << "\t"<< i << std::endl;
   }
+}
+
+void CsvMerger::setRegPattern (std::string pattern)
+{
+  reg_pattern = pattern;
 }

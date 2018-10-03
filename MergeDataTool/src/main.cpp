@@ -24,21 +24,17 @@ int main(int argc, char * argv[])
   std::string output_file = argv[3];              //name of output file
   std::string output_path = argv[4];              //path of output file
   std::string reg_pattern;
-
-  CsvMerger myMerger(name_of_csv_files, path_of_csv_files);
-
-  reg_pattern = name_of_csv_files + ".csv$";
-
   if (argc != 5)
   {
     std::cout << "number of arguments false!" << std::endl;
   }
 
-  std::regex reg(reg_pattern);
+  CsvMerger myMerger(name_of_csv_files, path_of_csv_files);
 
-  std::cout << reg_pattern << std::endl;
+  reg_pattern = name_of_csv_files + ".csv$";
+  myMerger.setRegPattern (reg_pattern);
+  myMerger.findCsvFiles ();
 
-  myMerger.getFileList ();
 
 
 
