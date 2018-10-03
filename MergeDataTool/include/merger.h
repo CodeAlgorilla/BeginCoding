@@ -13,10 +13,11 @@ private:
   std::string directory_path;
   std::string name_of_csv_file;
   long number_of_lines;
+  void getDir();
 
 
 public:
-  CsvMerger(std::string file_name, std::string file_path);
+  CsvMerger(std::string file_name, std::string dir);
   ~CsvMerger();
   void csvReader();
   void csvWriter();

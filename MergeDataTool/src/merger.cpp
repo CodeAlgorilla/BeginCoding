@@ -6,13 +6,13 @@
 #include <sstream>
 #include <algorithm>
 #include <dirent.h>
-#include <sys/types.h>
-#include <sys/statfs.h>
+#include <boost/filesystem.hpp>
+#include <iostream>
 
-CsvMerger::CsvMerger(std::string file_name, std::string file_path)
+CsvMerger::CsvMerger(std::string file_name, std::string dir_path)
 {
   name_of_csv_file = file_name;
-  directory_path = file_path;
+  directory_path = dir_path;
 }
 
 CsvMerger::~CsvMerger ()
@@ -37,37 +37,22 @@ void CsvMerger::csvWriter ()
 
 void CsvMerger::getFileList ()
 {
-  DIR *dir;
-  DIR *new_dir;
-  struct dirent *dirptr;
-  if ((dir = opendir (directory_path.c_str ())) == NULL)
+  if (boost::filesystem::exists (directory_path) && boost::filesystem::is_directory (directory_path))
   {
-    std::cout << "open directory false!" <<std::endl;
-    exit(-1);
-  }
-
-  while((dirptr = readdir (dir)) != NULL)
-  {
-    if (strcmp(dirptr->d_name, ".") == 0 || strcmp(dirptr->d_name, "..") == 0)
+    boost::filesystem::recursive_directory_iterator iter(directory_path);
+    boost::filesystem::recursive_directory_iterator end;
+    while(iter != end)
     {
-      continue;
+      if (boost::filesystem::is_regular_file (iter->path ()))
+      {
+        list_of_files.push_back (iter->path ().c_str ());
+      }
+      iter++;
     }
-    if (dirptr->d_type == DT_DIR)
-    {
-      std::string new_path = directory_path + "/" + dirptr->d_name;
-      new_dir = opendir(new_path.c_str ());
-      continue;
-    }
-    list_of_files.push_back (dirptr->d_name);
-    std::cout << dirptr->d_name <<std::endl;
   }
-  closedir (dir);
-
-  std::cout << sizeof list_of_files << std::endl;
-  for (int i=0; i < sizeof list_of_files; i++)
+  std::cout << list_of_files.size ()<<std::endl;
+  for(int i=0; i < list_of_files.size (); i++)
   {
-    std::cout << list_of_files[i].c_str ()<<  "\t" << i << std::endl;
+    std::cout << list_of_files[i] << "\t"<< i << std::endl;
   }
-
-
 }

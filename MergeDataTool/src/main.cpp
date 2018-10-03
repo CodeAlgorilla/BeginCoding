@@ -27,8 +27,7 @@ int main(int argc, char * argv[])
 
   CsvMerger myMerger(name_of_csv_files, path_of_csv_files);
 
-  reg_pattern =    name_of_csv_files + ".csv$";
-  std::cout << argv[0] << std::endl;
+  reg_pattern = name_of_csv_files + ".csv$";
 
   if (argc != 5)
   {
@@ -45,16 +44,16 @@ int main(int argc, char * argv[])
 
 
 
-  RandomNumberGenerator generator (0,20);
-  long * array;
-  array = generator.getRandomArray ();
+//  RandomNumberGenerator generator (0,20);
+//  long * array;
+//  array = generator.getRandomArray ();
 
-  std::cout << "Hello World!" << std::endl;
-  for (int i = 0; i < 20; i++)
-  {
-    std::cout << array[i] << std::endl;
-  }
-  std::cout << "in the end,ooooo" << std::endl;
+//  std::cout << "Hello World!" << std::endl;
+//  for (int i = 0; i < 20; i++)
+//  {
+//    std::cout << array[i] << std::endl;
+//  }
+//  std::cout << "in the end,ooooo" << std::endl;
   return 0;
 }
 
