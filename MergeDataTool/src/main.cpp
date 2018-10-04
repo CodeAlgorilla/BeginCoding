@@ -38,28 +38,14 @@ int main(int argc, char * argv[])
   list_of_csv_files = myMerger.getCsvFileList ();
   for (int i = list_of_csv_files.size () -1; i >= 0 ; i--)
   {
-    std::cout << list_of_csv_files[i] << std::endl;
     myMerger.csvReader(list_of_csv_files[i]);
     myMerger.csvWriter(output_path);
   }
+  RandomNumberGenerator generator (0,myMerger.getLineNum());
+  long * array;
+  array = generator.getRandomArray ();
+  myMerger.addRanNum (array, output_path, output_path + " _ran_num");
 
-  std::cout << myMerger.getLineNum () << std::endl;
-
-
-
-
-
-
-//  RandomNumberGenerator generator (0,20);
-//  long * array;
-//  array = generator.getRandomArray ();
-
-//  std::cout << "Hello World!" << std::endl;
-//  for (int i = 0; i < 20; i++)
-//  {
-//    std::cout << array[i] << std::endl;
-//  }
-//  std::cout << "in the end,ooooo" << std::endl;
   return 0;
 }
 

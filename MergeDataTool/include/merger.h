@@ -26,5 +26,5 @@ public:
   void setRegPattern (std::string pattern);
   std::vector<std::string> getCsvFileList ();
   long getLineNum();
-  void addRanNum();
+  void addRanNum(long * ran_array, std::string input_file, std::string output_file);
 };

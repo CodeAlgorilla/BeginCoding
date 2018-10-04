@@ -36,10 +36,6 @@ void CsvMerger::findCsvFiles ()
       list_of_csv_files.push_back (list_of_files[i]);
     }
   }
-//  for(int i=0; i < list_of_csv_files.size (); i++)
-//  {
-//    std::cout << list_of_csv_files[i] << "\t"<< i << std::endl;
-//  }
 }
 
 void CsvMerger::csvReader (std::string csv_file_path)
@@ -57,10 +53,10 @@ void CsvMerger::csvReader (std::string csv_file_path)
     if (line.length () != 0)
     {
       data_stream << line << '\n';
+      number_of_lines++;
     }
-    number_of_lines++;
   }
-  std::cout << data_stream.str ();
+//  std::cout << data_stream.str ();
   csv_file.close ();
 }
 
@@ -114,7 +110,33 @@ long CsvMerger::getLineNum ()
   return number_of_lines;
 }
 
-void CsvMerger::addRanNum ()
+void CsvMerger::addRanNum (long * ran_array, std::string input_file, std::string output_file)
 {
+  data_stream.clear ();
+  std::stringstream new_stream;
+  std::ifstream merged_csv_file;
+  std::ofstream merged_csv_file_ran;
+  std::string line;
+  new_stream.clear ();
+  merged_csv_file.open (input_file, std::ios::in);
+  if (!merged_csv_file.is_open ())
+  {
+    std::cout << "fail to open merged_file: " << input_file << std::endl;
+  }
+  int i = 0;
+  while(!merged_csv_file.eof())
+  {
+    std::getline (merged_csv_file, line, '\n');
+    if (line.length () != 0)
+    {
+      new_stream << line << "," << ran_array[i] << '\n';
+      i++;
+    }
 
+  }
+  merged_csv_file.close ();
+  std::cout << new_stream.str () << std::endl;
+  merged_csv_file_ran.open (output_file, std::ios::out);
+  merged_csv_file_ran << new_stream.str ();
+  merged_csv_file_ran.close ();
 }
