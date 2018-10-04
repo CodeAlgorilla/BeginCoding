@@ -56,7 +56,6 @@ void CsvMerger::csvReader (std::string csv_file_path)
       number_of_lines++;
     }
   }
-//  std::cout << data_stream.str ();
   csv_file.close ();
 }
 
@@ -87,12 +86,6 @@ void CsvMerger::getFileList ()
       iter++;
     }
   }
-
-//  std::cout << list_of_files.size ()<<std::endl;
-//  for(int i=0; i < list_of_files.size (); i++)
-//  {
-//    std::cout << list_of_files[i] << "\t"<< i << std::endl;
-//  }
 }
 
 void CsvMerger::setRegPattern (std::string pattern)
