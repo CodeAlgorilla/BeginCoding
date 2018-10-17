@@ -16,6 +16,8 @@ private:
   long number_of_lines = 0;
   void getFileList();
   std::stringstream data_stream;
+  void sortByRanNum(std::vector<std::vector<std::string>>& row);
+  static bool CompareTwoRows(std::vector<std::string> i,std::vector<std::string> j);
 
 public:
   CsvMerger(std::string file_name, std::string dir);
