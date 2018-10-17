@@ -10,6 +10,15 @@
 #include <boost/regex.hpp>
 #include <iostream>
 
+bool CsvMerger::CompareTwoRows(std::vector<std::string> i,std::vector<std::string> j)
+{
+
+    long a = std::atol(((i)[1]).c_str());
+    long b = std::atol(((j)[1]).c_str());
+
+    return(a < b);
+}
+
 CsvMerger::CsvMerger(std::string file_name, std::string dir_path)
 {
 
@@ -116,20 +125,42 @@ void CsvMerger::addRanNum (long * ran_array, std::string input_file, std::string
   {
     std::cout << "fail to open merged_file: " << input_file << std::endl;
   }
-  int i = 0;
+  int i_row= 0;
   while(!merged_csv_file.eof())
-  {
-    std::getline (merged_csv_file, line, '\n');
-    if (line.length () != 0)
     {
-      new_stream << line << "," << ran_array[i] << '\n';
-      i++;
+        std::vector<std::string> line_data;
+        std::getline (merged_csv_file, line, '\n');
+        if (line.length () != 0)
+        {
+            line_data.push_back(line);
+            line_data.push_back(std::to_string(ran_array[i_row]));
+            line_data.push_back("\n");
+            row.push_back(line_data);
+            i_row++;
+        }
     }
+    merged_csv_file.close ();
 
-  }
-  merged_csv_file.close ();
-  std::cout << new_stream.str () << std::endl;
-  merged_csv_file_ran.open (output_file, std::ios::out);
-  merged_csv_file_ran << new_stream.str ();
-  merged_csv_file_ran.close ();
+    new_stream.clear ();
+    sortByRanNum(row);
+    for (int i = 0; i <i_row; i++)
+    {
+        std::vector<std::string> temp;
+        temp = row[i];
+        temp.erase(temp.begin() + 1);
+        for(int j = 0; j < temp.size(); j++)
+        {
+            new_stream << temp[j];
+        }
+
+    }
+//    std::cout << new_stream.str () << std::endl;
+    merged_csv_file_ran.open (output_file, std::ios::out);
+    merged_csv_file_ran << new_stream.str ();
+    merged_csv_file_ran.close ();
+}
+
+void CsvMerger::sortByRanNum (std::vector<std::vector<std::string>>& row)
+{
+    std::stable_sort(row.begin(),row.end(),CompareTwoRows);
 }
