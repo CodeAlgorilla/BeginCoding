@@ -22,16 +22,17 @@ int main(int argc, char * argv[])
   std::string name_of_csv_files = argv[1];        //name of the csv files which we want to merge
   std::string path_of_csv_files = argv[2];        //path of the csv files
   std::string output_path = argv[3];              //path of output file
+  std::string label_file_path = argv[4];
   std::string reg_pattern;
   std::vector<std::string> list_of_csv_files;
-  if (argc != 4)
+  if (argc != 5)
   {
     std::cout << "number of arguments false!" << std::endl;
   }
 
-  CsvMerger myMerger(name_of_csv_files, path_of_csv_files);
+  CsvMerger myMerger(name_of_csv_files, path_of_csv_files, label_file_path);
 
-  reg_pattern = name_of_csv_files + ".csv$";
+  reg_pattern = name_of_csv_files;
   myMerger.setRegPattern (reg_pattern);
   myMerger.findCsvFiles ();
 
@@ -44,7 +45,8 @@ int main(int argc, char * argv[])
   RandomNumberGenerator generator (0,myMerger.getLineNum());
   long * array;
   array = generator.getRandomArray ();
-  myMerger.addRanNum (array, output_path, output_path + " _ran_num");
+  myMerger.addRanNum (array, output_path, output_path + " _ran_num.csv");
+  myMerger.cutCsvFile(output_path);
 
   return 0;
 }
